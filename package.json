@@ -1,0 +1,23 @@
+{
+  "name": "protocolloadfallbackhandler",
+  "version": "1.0.0",
+  "description": "Allows the registration of custom protocol handlers to load resources if the browser fails to load the resource",
+  "scripts": {
+    "build": "make clean all"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Daniel-Abrecht/protocolloadfallbackhandler.git"
+  },
+  "keywords": [],
+  "author": "Daniel Abrecht",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Daniel-Abrecht/protocolloadfallbackhandler/issues"
+  },
+  "homepage": "https://github.com/Daniel-Abrecht/protocolloadfallbackhandler",
+  "devDependencies": {
+    "uglify-es": "latest"
+  }
+}
+
