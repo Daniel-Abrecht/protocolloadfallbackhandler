@@ -12,6 +12,10 @@
   "keywords": [],
   "author": "Daniel Abrecht",
   "license": "MIT",
+  "files": [
+    "dist/*.js"
+  ],
+  "browser": "dist/protocolloadfallbackhandler.js",
   "bugs": {
     "url": "https://github.com/Daniel-Abrecht/protocolloadfallbackhandler/issues"
   },
