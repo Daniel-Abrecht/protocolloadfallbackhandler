@@ -72,3 +72,7 @@ The SourceIntercepter also defines the property $sourcelock as a boolean for eve
 | ------ | ----------- |
 | getNativeURI(element) | Get the URI the browser actually used to get the resource from |
 | setNativeURI(element,uri) | Set the URL to load, but don't modify the true URI of the resource or what getSource returns. |
+
+## Events
+
+While the ProtocolLoadFallbackHandler tries to stop the propagation of error events if a fallback is available and creates one if an unrecoverable error occures, it's not reliable. Because of this, if all fallbacks fail, it will also create a custom "loaderror" event, which is an instance of ErrorEvent. The "loaderror" event is cancellable. The ProtocolLoadFallbackHandler only sets the loadState property of an element to "loaderror" if the "loaderror" event wasn't cancelled. Other events indicating the start, end, etc. of resource loading should work as expected.
