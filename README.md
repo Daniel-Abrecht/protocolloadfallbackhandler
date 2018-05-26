@@ -64,6 +64,10 @@ Attributes, it will also register an error handler to inform the ProtocolLoadFal
 resources fails. This is necessary because an element may not been attached to the document in some cases, like when
 loading images to draw in a canvas for example.
 
+It also sets the class "loading", "ready", "loaded", "loaderror" or none when the loadState property of an element is set to one of them. The SourceIntercepter and ProtocolLoadFallbackHandler also try to set that property as accurately as possible, but since there is no unified way to figure out if a resource is loaded, loaded, or the loading failed, and sometimes there is none at all, it's not perfectly accurate and sometimes not set at all.
+
+The SourceIntercepter also defines the property $sourcelock as a boolean for every html element. It's a workaround to only change the source of an element to load when changing the src or href properties, but not the values they return, which is necessary if a fallback protocol handler sets it using an independent library function that doesn't use this library to set the source. The ProtocolLoadFallbackHandler usually takes care of setting this property when necessary.
+
 | Method | Description |
 | ------ | ----------- |
 | getNativeURI(element) | Get the URI the browser actually used to get the resource from |
