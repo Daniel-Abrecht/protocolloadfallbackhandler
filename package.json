@@ -1,6 +1,6 @@
 {
   "name": "protocolloadfallbackhandler",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "Allows the registration of custom protocol handlers to load resources if the browser fails to load the resource",
   "scripts": {
     "build": "make clean all"
