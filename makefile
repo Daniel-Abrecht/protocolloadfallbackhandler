@@ -1,5 +1,5 @@
 
-SOURCES = $(wildcard lib/*.js)
+SOURCES = $(sort $(wildcard lib/*.js))
 
 TARGETS += dist/protocolloadfallbackhandler.js
 TARGETS += dist/protocolloadfallbackhandler.min.js
