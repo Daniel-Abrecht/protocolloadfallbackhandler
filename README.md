@@ -1,6 +1,6 @@
 # protocolloadfallbackhandler.js
 
-Currently, when adding an &lt;img> or &lt;video> to a webpage or when doing a fetch() in js,
+Currently, when adding an &lt;img> or &lt;video> to a webpage or when doing a fetch() or using an XMLHttpRequest in js,
 most browsers will only support http and https URLs. Specify a magnet uri as image source, for example,
 and it probably just won't work at all. The idea behind protocolloadfallbackhandler.js is
 to first give the browser a chance to load the resource, and if it fails, check if a protocol
@@ -33,6 +33,8 @@ You can register a resource handler using the ```protocolLoadFallbackHandler.set
 | nodeTypes | Map | | A Node type name -> Node type map. |
 | replaceFetch | Boolean | true | Specifies wether fetch should be replaced so it can handle registered protocols. |
 | nativeFetch | Function | | A reference to the browsers own fetch function |
+| replaceXMLHttpRequest | Boolean | true | Specifies wether XMLHttpRequest should be replaced so it can handle registered protocols. |
+| nativeXMLHttpRequest | Function | | A reference to the browsers own replaceXMLHttpRequest class |
 | serviceWorkerDoesHandleLoadFallbackHandlers | Boolean | false | Wether a service worker shall handle registered protocols. |
 | serviceWorkerPrefix | string | ```location.origin + "/proxy/"``` | If there is a service worker capable of handling registered protocols, requests it shall handle will be passed to it as an url of the form ```serviceWorkerPrefix + btoa(URI)```. |
 | fallbackProxyAvailable | Boolean | false | Wether there is a proxy for handling requests the registered protocol handlers couldn't handle. |
