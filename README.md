@@ -34,7 +34,7 @@ You can register a resource handler using the ```protocolLoadFallbackHandler.set
 | replaceFetch | Boolean | true | Specifies wether fetch should be replaced so it can handle registered protocols. |
 | nativeFetch | Function | | A reference to the browsers own fetch function |
 | replaceXMLHttpRequest | Boolean | true | Specifies wether XMLHttpRequest should be replaced so it can handle registered protocols. |
-| nativeXMLHttpRequest | Function | | A reference to the browsers own replaceXMLHttpRequest class |
+| nativeXMLHttpRequest | Function | | A reference to the browsers own XMLHttpRequest class |
 | serviceWorkerDoesHandleLoadFallbackHandlers | Boolean | false | Wether a service worker shall handle registered protocols. |
 | serviceWorkerPrefix | string | ```location.origin + "/proxy/"``` | If there is a service worker capable of handling registered protocols, requests it shall handle will be passed to it as an url of the form ```serviceWorkerPrefix + btoa(URI)```. |
 | fallbackProxyAvailable | Boolean | false | Wether there is a proxy for handling requests the registered protocol handlers couldn't handle. |
