@@ -18,8 +18,9 @@ dist/protocolloadfallbackhandler.js: $(SOURCES)
 
 dist/protocolloadfallbackhandler.min.js dist/protocolloadfallbackhandler.min.js.map: $(SOURCES)
 	cd dist && echo '"use strict";' | ../node_modules/uglify-es/bin/uglifyjs \
-          --mangle --compress -o protocolloadfallbackhandler.min.js \
-          --source-map url=protocolloadfallbackhandler.min.js.map -- /dev/stdin $(addprefix ../,$^)
+	  --mangle --compress -o protocolloadfallbackhandler.min.js \
+	  --source-map includeSources,url=protocolloadfallbackhandler.min.js.map \
+	  -- /dev/stdin $(addprefix ../,$^)
 
 clean:
 	rm -f $(TARGETS)
