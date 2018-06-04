@@ -29,6 +29,8 @@ You can register a resource handler using the ```protocolLoadFallbackHandler.set
 | ---- | ---- | ------- | ------- |
 | protocolLoadFallbackHandler | ProtocolLoadFallbackHandler | | The only instance of the ProtocolLoadFallbackHandler class. |
 | sourceIntercepter | SourceIntercepter | | Only instance of the SourceIntercepter class. |
+| CSSSourceIntercepter | CSSSourceIntercepter | | The only instance of the CSSSourceIntercepter class. |
+| URIMapCacher | URIMapCacher | | The only instance of the URIMapCacher class. |
 | ProtocolLoadFallbackHandlerError (message,soft) | class | | For creating errors originating from protocol handlers. The soft parameter indicates if the proxy url should be tried as a fallback if possible. |
 | nodeTypes | Map | | A Node type name -> Node type map. |
 | replaceFetch | Boolean | true | Specifies wether fetch should be replaced so it can handle registered protocols. |
@@ -41,7 +43,7 @@ You can register a resource handler using the ```protocolLoadFallbackHandler.set
 | proxybase | string | ```location.origin + "/proxy/"``` | The url of a proxy for handling failed requests. Such requests will be passed to it as an url of the form ```proxybase + btoa(URI)```. |
 
 
-## ProtocolLoadFallbackHandler
+### ProtocolLoadFallbackHandler
 
 This class detects if loading a resource failed, and tries to use the registered protocol handlers if that is the case.
 It's also used to register protocol handlers. By itself, it only gets errors from nodes attached to the document body.
@@ -57,7 +59,7 @@ It can be informed of errors from other sources using the onerror(event) method.
 | makeVirtualURI(uri) | Try to create a URL from an URI that the Browser actually supports. Consider using renderTo or fetch instead whenever possible. |
 
 
-## SourceIntercepter
+### SourceIntercepter
 
 Intercepts the src and href properties of every Node instance, and renames the original ones to nativeSrc/nativeHref.
 This allows the ProtocolLoadFallbackHandler to set a blob url or something similar for the browser to load the resource
@@ -75,6 +77,37 @@ The SourceIntercepter also defines the property $sourcelock as a boolean for eve
 | getNativeURI(element) | Get the URI the browser actually used to get the resource from |
 | setNativeURI(element,uri) | Set the URL to load, but don't modify the true URI of the resource or what getSource returns. |
 
+
+### CSSSourceIntercepter
+
+Intercepts every CSS property that can take an image URL, uses the ProtocolLoadFallbackHandler to determine wheter the browser can handle the URI on it's own and tries to use the protocol handlers using the ProtocolLoadFallbackHandler class to load the images anyway.
+
+| Method | Description |
+| ------ | ----------- |
+| CSSUnescape(value) | Unescape CSS Properties, reverses CSS.escape |
+| getCSSURIs(value) | Extract URIs from CSS String |
+| CSSURIReplace(value,uri,url) | Replace all occurances of url(uri) in value by url(url) |
+
+### URIMapCacher
+
+Keeps track of URI => URL mappings. It's also an event target. Setting an url creates either a "newurl" or a "urlchange" event. If a mapping is removed, a "removed" event is generated.
+
+| Method | Description |
+| ------ | ----------- |
+| getURL(uri) | Lookup the url for an uri. May return null, a string, or a promise returning null or a string. Also increments the url reference count. |
+| getURI(url) | Lookup the uri for an url. Returns the uri as a string, or null if not found |
+| set(uri,url) | Set a url for the uri. If a url for the uri is already set, override it. The url can be a promise or string, but the uri must be a string. Increments the url reference count. |
+| release | Decrements the url reference count. If it reaches 0, the uri => url mapping is remved. |
+
 ## Events
 
+### Error events
+
 While the ProtocolLoadFallbackHandler tries to stop the propagation of error events if a fallback is available and creates one if an unrecoverable error occures, it's not reliable. Because of this, if all fallbacks fail, it will also create a custom "loaderror" event, which is an instance of ErrorEvent. The "loaderror" event is cancellable. The ProtocolLoadFallbackHandler only sets the loadState property of an element to "loaderror" if the "loaderror" event wasn't cancelled. Other events indicating the start, end, etc. of resource loading should work as expected.
+
+### Custom events
+
+| Name | `detail` property type | Description |
+| ---- | ----------------- | ----------- |
+| stylesheetadded | CSSStyleSheet | A new stylesheet was attached to the document. |
+| stylesheetremoved | CSSStyleSheet | A new stylesheet was removed from the document. |
