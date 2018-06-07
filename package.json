@@ -13,7 +13,7 @@
   "author": "Daniel Abrecht",
   "license": "MIT",
   "files": [
-    "dist/*.js"
+    "dist/*"
   ],
   "browser": "dist/protocolloadfallbackhandler.js",
   "bugs": {
