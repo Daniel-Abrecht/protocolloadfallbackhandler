@@ -111,3 +111,23 @@ While the ProtocolLoadFallbackHandler tries to stop the propagation of error eve
 | ---- | ----------------- | ----------- |
 | stylesheetadded | CSSStyleSheet | A new stylesheet was attached to the document. |
 | stylesheetremoved | CSSStyleSheet | A new stylesheet was removed from the document. |
+
+
+# Embeding this library using a &gt;script> tag
+
+You can use protocolloadfallbackhandler.min.js from a cdn. For example, you could use it using the jsdelivr cdn, which can be used as cdn for any npm package: 
+```
+<script src="https://cdn.jsdelivr.net/npm/protocolloadfallbackhandler@latest/dist/protocolloadfallbackhandler.min.js"></script>
+```
+You may want to change @latest to a specific version though, to prevent newer versions from inadvertenly breaking things. This is also necessary for specifying an integrity attribute to make sure the file wasn't manipulated by the cdn.
+
+Alternatively, you can download protocolloadfallbackhandler.min.js from the github release page, download it with npm, or clone this project and creati it using ```npm install && npm run build```.
+
+The script should be embedded, and all protocol handlers registered, before they are needed anywhere. You can set all Globals that are listed above with a default value before embedding it to override their default value. 
+
+
+# Using this library with webpack
+
+You can just use require, import or similar to use this library. Require will return the init function of this library,
+to which an object can be passed to override any defaults used for the Globals listed above. This library will still
+define these Globals in global scope after the init function is called, but it will also return an object containing references to them. Calling the init function more than once isn't recommended, if it's done with some different options, some of them may no longer have any effect, but it will reinstatement all classes and replace the globals while maintaining state.
