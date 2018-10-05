@@ -113,7 +113,7 @@ While the ProtocolLoadFallbackHandler tries to stop the propagation of error eve
 | stylesheetremoved | CSSStyleSheet | A new stylesheet was removed from the document. |
 
 
-# Embeding this library using a &gt;script> tag
+# Embeding this library using a &lt;script> tag
 
 You can use protocolloadfallbackhandler.min.js from a cdn. For example, you could use it using the jsdelivr cdn, which can be used as cdn for any npm package: 
 ```
@@ -125,6 +125,9 @@ Alternatively, you can download protocolloadfallbackhandler.min.js from the gith
 
 The script should be embedded, and all protocol handlers registered, before they are needed anywhere. You can set all Globals that are listed above with a default value before embedding it to override their default value. 
 
+# Current protocol handler implementations
+
+ * https://github.com/Daniel-Abrecht/magnet-protocolhandler - Use WebTorent magnet URIs like any other URL.
 
 # Using this library with webpack
 
